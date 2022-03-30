@@ -1,16 +1,18 @@
 package com.generation.blogpessoal.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
@@ -32,7 +34,19 @@ public class Postagem {
 	private String texto;
 	
 	@UpdateTimestamp //atualiza a data das postagens a cada modificação feita
-	private LocalDate data;
+	private LocalDateTime data;
+	
+	@ManyToOne
+	@JsonIgnoreProperties("postagem")
+	private Tema tema;
+
+	public Tema getTema() {
+		return tema;
+	}
+
+	public void setTema(Tema tema) {
+		this.tema = tema;
+	}
 
 	public Long getId() {
 		return id;
@@ -58,11 +72,11 @@ public class Postagem {
 		this.texto = texto;
 	}
 
-	public LocalDate getData() {
+	public LocalDateTime getData() {
 		return data;
 	}
 
-	public void setData(LocalDate data) {
+	public void setData(LocalDateTime data) {
 		this.data = data;
 	} 
 
